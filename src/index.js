@@ -22,10 +22,9 @@ app.use('/api', userRoutes)
 app.set('port', port);
 
 if (cluster.isPrimary) {
-    // Count the machine's CPUs
+
     let cpuCount = os.cpus().length
 
-    // Create a worker for each CPU
     for (let i = 0; i < cpuCount; i += 1) {
         cluster.fork();
     }
