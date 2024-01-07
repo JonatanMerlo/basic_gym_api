@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  lastName String
+  email String
+  routines Routine[]
+  status Boolean @default(true)
+
+}
+
+model Routine{
+  id Int @id @default(autoincrement())
+  objetive String
+  initialDate DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  series Serie[]
+  status Boolean @default(true)
+}
+
+
+model Serie {
+  id Int @id @default(autoincrement())
+  numbersOfTurns Int
+  routine Routine @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  routineId Int
+  ejercices Ejercice[]
+  status Boolean @default(true)
+}
+
+model Ejercice{
+  id Int @id @default(autoincrement())
+  numbersOfRepetitions Int
+  name String
+  serie Serie @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  serieId Int
+  status Boolean @default(true)
+}
+
