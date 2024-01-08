@@ -23,7 +23,7 @@ model User {
 model Routine{
   id Int @id @default(autoincrement())
   objetive String
-  initialDate DateTime
+  initialDate DateTime @default(now())
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   series Serie[]
